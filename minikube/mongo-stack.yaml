@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-mongodb-deployment
+  labels:
+    app: order-mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-mongodb
+  template:
+    metadata:
+      labels:
+        app: order-mongodb
+    spec:
+      containers:
+      - name: rvstore-orders-mongodb
+        image: mongo
+        envFrom:
+        - configMapRef:
+            name: mongodb-config
+        ports:
+        - containerPort: 27017
