@@ -1,0 +1,82 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.services.ui.serviceName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.services.ui.type }}
+  selector:
+    app: {{ .Values.services.ui.label }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.services.ui.port }}
+    nodePort: {{ .Values.services.ui.nodePort }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.services.productApi.serviceName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.services.productApi.label }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.services.productApi.port }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.services.authApi.serviceName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.services.authApi.label }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.services.authApi.port }}
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.services.gateway.serviceName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.services.gateway.type }}
+  selector:
+    app: {{ .Values.services.gateway.label }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.services.gateway.port }}
+    nodePort: {{ .Values.services.gateway.nodePort }}
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.services.orderApi.serviceName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.services.orderApi.label }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.services.orderApi.port }}
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.mongo.serviceName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.mongo.label }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.mongo.port }}

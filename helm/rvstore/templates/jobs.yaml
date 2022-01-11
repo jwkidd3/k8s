@@ -1,0 +1,50 @@
+#apiVersion: batch/v1beta1 #for 1.20 and earlier
+apiVersion: batch/v1 #for 1.21 and later
+kind: CronJob
+metadata:
+  name: {{ .Values.services.orderSimulator.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 45
+      backoffLimit: 2
+      ttlSecondsAfterFinished: 120
+      template:
+        spec:
+          containers:
+          - name: rvstore-order-simulator
+            image: {{ .Values.services.orderSimulator.image }}
+            imagePullPolicy: IfNotPresent
+            envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-workload-config
+            env:
+            - name: JOB
+              value: "true"
+          restartPolicy: Never
+---
+#apiVersion: batch/v1beta1 #for 1.20 and earlier
+apiVersion: batch/v1 #for 1.21 and later
+kind: CronJob
+metadata:
+  name: {{ .Values.services.productSync.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 45
+      backoffLimit: 2
+      ttlSecondsAfterFinished: 120
+      template:
+        spec:
+          containers:
+          - name: rvstore-product-sync
+            image: {{ .Values.services.productSync.image }}
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: JOB
+              value: "true"
+          restartPolicy: Never

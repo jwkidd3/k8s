@@ -1,0 +1,91 @@
+# Spring properties
+springProfile: compose
+
+# Namespace
+namespace: rvstore
+
+# MongoDB properties
+mongo:
+  serviceName: rvstore-orders-mongodb
+  label: rvstore-mongo
+  image: public.ecr.aws/vergeops/rvstore-mongo
+  replicas: 1
+  username: mongoadmin
+  password: secret
+  port: 27017
+
+# Service properties
+services:
+  targetCPUPercentage: 10
+  ui:
+    name: ui-deployment
+    serviceName: rvstore-ui
+    label: rvstore-ui
+    port: 80
+    nodePort: 30080
+    replicas: 1
+    type: NodePort
+    image: public.ecr.aws/vergeops/rvstore-ui
+    resources:
+      requests: 100m
+      limits: 200m
+  productApi:
+    name: product-api-deployment
+    serviceName: rvstore-product-api
+    label: rvstore-product-api
+    port: 9001
+    replicas: 1
+    image: public.ecr.aws/vergeops/rvstore-product-api
+    resources:
+      requests: 100m
+      limits: 500m
+  authApi:
+    name: auth-api-deployment
+    serviceName: rvstore-auth-api
+    label: rvstore-auth-api
+    port: 9003
+    replicas: 1
+    image: public.ecr.aws/vergeops/rvstore-auth-api
+    resources:
+      requests: 100m
+      limits: 500m
+  orderApi:
+    name: order-api-deployment
+    serviceName: rvstore-order-api
+    label: rvstore-order-api
+    port: 9002
+    replicas: 1
+    image: public.ecr.aws/vergeops/rvstore-order-api
+    resources:
+      requests: 500m
+      limits: 500m
+  gateway:
+    name: api-gateway-deployment
+    serviceName: rvstore-api-gateway
+    port: 9000
+    label: rvstore-api-gateway
+    nodePort: 30090
+    replicas: 1
+    type: NodePort
+    image: public.ecr.aws/vergeops/rvstore-gateway-service
+    resources:
+      requests: 300m
+      limits: 300m
+  orderSimulator:
+    name: order-simulator
+    image: public.ecr.aws/vergeops/rvstore-order-simulator
+  productSync:
+    name: rvstore-product-sync
+    image: public.ecr.aws/vergeops/rvstore-product-sync
+  elasticsearch:
+    name: elasticsearch
+    serviceName: elasticsearch
+    label: elasticsearch
+    port: 9200
+    replicas: 1
+    image: elasticsearch:7.12.0
+    
+  ingress:
+    name: rvstore-gateway-ingress
+    port: 30880
+    type: NodePort
