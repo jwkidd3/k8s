@@ -36,10 +36,28 @@ Install kubeadm, kubectl, and kubernetes-cni
 $ apt-get install -y kubelet kubeadm kubectl kubernetes-cni
 ```
 
+### Step 2.a: Configure cgroups
+Create the file
+```
+/etc/docker/daemon.json
+{
+    "exec-opts": ["native.cgroupdriver=systemd"]
+}
+```
+Then perform:
+```
+systemctl daemon-reload
+systemctl restart docker
+systemctl restart kubelet
+```
+
+
 ### Step 3: Initialize the master node
 ```
 kubeadm init
 ```
+***It might be necessary to use the option: --ignore-preflight-errors=all
+
 The command will install Kubernetes onto the master node and will output some instructions, including configuring the kubectl command. Follow the first part where you set up kubectl. Leave the rest.
 ```
 $ exit
