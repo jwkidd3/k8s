@@ -6,10 +6,11 @@ We're going to create a single master node and single worker node cluster.
 ### Step 1: Set up the AWS infrastructure
 First, make sure that the nodes are in a subnet and security group that allows the necessary traffic. Make sure the following ports are open:
 
-* 80
-* 8080
-* 6443
-* 6783
+* TCP 80
+* TCP 8080
+* TCP 6443
+* TCP 6783
+* UDP 6783-6784
 
 Launch two instances in the subnet. Choose a t3.medium for the master and a t3.small for the worker. I'm going to use Ubuntu.
 
