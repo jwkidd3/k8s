@@ -12,7 +12,6 @@ First, make sure that the nodes are in a subnet and security group that allows t
 
 Launch two instances in the subnet. Choose a t3.medium for the master and a t3.small for the worker. I'm going to use Ubuntu.
 
-> *NOTE*: To save some typing, you can install the software and then create an AMI to launch the rest of the nodes. I'll point out where to do this below.
 
 ### Step 2: Install the software on the instances
 SSH into the master node 
@@ -36,7 +35,6 @@ Install kubeadm, kubectl, and kubernetes-cni
 ```
 $ apt-get install -y kubelet kubeadm kubectl kubernetes-cni
 ```
-> *NOTE*: At this point all the necessary software is installed. If you chose to go the AMI option above, then go create an AMI from this instance at this point. Then use that AMI to launch your worker node.
 
 ### Step 3: Initialize the master node
 ```
