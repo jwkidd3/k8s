@@ -1,13 +1,13 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: nginx-scaler
+  name: stress-scaler
   namespace: advk8s
 spec:
   minReplicas: 1
   maxReplicas: 10
   scaleTargetRef:
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1
     kind: Deployment
-    name: nginx-deployment
-  targetCPUUtilizationPercentage: 20
+    name: stress-deployment
+  targetCPUUtilizationPercentage: 10
